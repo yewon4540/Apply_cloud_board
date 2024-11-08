@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>신청 글 작성</title>
+
+  <link rel="stylesheet" th:href="@{/css/board/create_post.css}">
+  <link rel="stylesheet" th:href="@{/css/board/background.css}">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+  <script>
+    $(document).ready(function() {
+      // 파일 선택 시 파일 이름을 표시
+      $("#attachment").on('change', function() {
+        var fileName = $(this).val().split('\\').pop(); // 파일 경로에서 파일 이름만 추출
+        $(".upload-name").val(fileName);
+      });
+    });
+  </script>
+</head>
+<body>
+
+<div id="wrap">
+
+  <!--배경 꾸미기 start-->
+  <img id="right_pcline" th:src="@{/img/board/right_pcline.png}" alt="우팝콘 라인" draggable="false">
+  <img id="left_pcline" th:src="@{/img/board/left_pcline.png}" alt="좌팝콘 라인" draggable="false">
+  <img id="down_pcs" th:src="@{/img/board/popcorns.png}" alt="아래팝콘들" draggable="false">
+  <!--배경 꾸미기 end-->
+
+  <div class="post_box">
+
+    <div class="info_box">
+      <img class="info_dumi" th:src="@{/img/board/info_dumi.png}" alt="인포 듬이" draggable="false">
+      <div class="bubble_box">
+        <img th:src="@{/img/board/bubble.png}" alt="말풍선" draggable="false">
+        <span>작성 전 필독!!</span>
+      </div>
+    </div>
+
+    <div class="popup_bg">
+      <div class="popup_box">
+        <div class="popup">
+          <h2>글 작성전 유의 사항</h2>
+          <div class="content_box">
+            <ul>
+              <li>
+                <h6>※ 사용 서비스는 명확하게 선택해주세요.</h6>
+                <p>잘 모르겠으면 '기타'로 체크하여 제목 혹은 사유에 기재해주시길 바랍니다.</p>
+              </li>
+
+              <li>
+                <h6>※ 사용기간 명확하게 명시해주세요.</h6>
+                <p>1. 프로젝트 시작 및 만료 기간 명확하게 명시하시길 바랍니다.</p>
+                <p>2. 최대 사용 기간은 90일로 제한되며 프로젝트 종료일이 미정(지속 유지) 일 경우 </p>
+                <p>&nbsp;&nbsp;&nbsp;만료일 전에 다시 신청해주시기 바랍니다. </p>
+              </li>
+
+              <li>
+                <h6>※ 프로젝트 시작으로 인한 리소스 발급 시 증빙자료 첨부</h6>
+                <p>1. 프로젝트 기획안 첨부 요망. (검토 후 발급)</p>
+                <p>2. 기획안에는 예산안 첨부 요망.</p>
+              </li>
+
+              <li>
+                <h6>※ 신청 글 작성 후에는 수정 및 삭제를 할 수 없습니다.</h6>
+                <p>- 내용 수정 및 삭제 필요 시 관리자에게 문의하세요.</p>
+                <p>- 진척사항은 '활동 기록' 댓글로 남깁니다.</p>
+              </li>
+
+              <li>
+                <p>🐻‍❄️ 게시판 관리자 : 이형석, 조서현, <span class="small_txt">박예원</span></p>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form id="create_form" method="POST" enctype="multipart/form-data" th:action="@{/create_post}" th:object="${board}">
+
+      <h2>리소스 생성 신청</h2>
+
+      <table>
+        <tr>
+          <td><label>사용 서비스 :</label></td>
+          <td>
+            <select class="form-select" th:field="*{service}">
+              <option value="EC2" selected>EC2</option>
+              <option value="S3">S3</option>
+              <option value="RDS">RDS</option>
+              <option value="Lambda">Lambda</option>
+              <option value="기타">기타</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><label>사용 기간 :</label></td>
+          <td>
+            <input type="date" th:field="*{startDate}" id="start_date" required>
+            ~
+            <input type="date" th:field="*{endDate}" id="end_date" required>
+          </td>
+        </tr>
+        <tr>
+          <td><label>글 제목 :</label></td>
+          <td><input type="text" th:field="*{title}" required></td>
+        </tr>
+        <tr>
+          <td><label>필요 사유 :</label></td>
+          <td><textarea th:field="*{reason}" class="maintext" required></textarea></td>
+        </tr>
+        <tr>
+          <td><label for="attachment">첨부 파일 :</label></td>
+          <td>
+            <div class="filebox">
+              <input class="upload-name" value="첨부파일" placeholder="첨부파일" readonly>
+              <label for="attachment">파일찾기</label>
+              <input type="file" name="attachment" id="attachment">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button type="submit">신청</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+
+</div>
+
+</body>
+
+<script>
+
+  const infoBox = document.querySelector('.info_box');
+  const popupBg = document.querySelector('.popup_bg');
+  // const bubbleBox = document.querySelector('.bubble_box');
+
+  // 마우스 올렸을 때 공지 팝업 보임
+  infoBox.addEventListener('mouseenter', ()=>{
+    popupBg.style.display='block';
+    // bubbleBox.style.display='none';
+  });
+
+  // 마우스 떠났을 때 공지 팝업 숨김
+  infoBox.addEventListener('mouseleave', ()=>{
+    popupBg.style.display='none';
+    // bubbleBox.style.display='flex';
+  });
+
+  // 마우스 올렸을 때 공지 팝업 보임 (팝업에 올렸을 때)
+  popupBg.addEventListener('mouseenter', ()=>{
+    popupBg.style.display='block';
+  });
+
+  // 마우스 떠났을 때 공지 팝업 숨김 (팝업에서 떠났을 때)
+  popupBg.addEventListener('mouseleave', ()=>{
+    popupBg.style.display='none';
+  });
+
+
+  // 추가폼 디폴트 값 설정
+  const startDate= document.getElementById('start_date');
+  const endDate = document.getElementById('end_date');
+
+  // 오늘 날짜로 startDate 설정
+  startDate.value = new Date().toISOString().substring(0, 10);
+
+  // endDate를 오늘로부터 90일 뒤로 설정
+  const date = new Date();
+  date.setDate(date.getDate() + 90); // 90일을 더함
+  endDate.value = date.toISOString().substring(0, 10);
+
+  // 날짜 유효성 검사 함수
+  function validateDates(){
+    const start = new Date(startDate.value);
+    const end = new Date(endDate.value);
+
+    //종료일이 시작일보다 전인 경우
+    if (end < start) {
+      alert("종료일은 시작일보다 이후여야 합니다.");
+      return false;
+    }
+
+    // 시작일과 종료일의 차이가 90일을 초과하는 경우
+    const differenceInDays = (end - start) / (1000 * 60 * 60 * 24);
+    if (differenceInDays > 90) {
+      alert("시작일과 종료일의 차이는 최대 90일이어야 합니다.");
+      return false;
+    }
+
+    return true; //유효한 경우 true 반환
+  }
+
+  // 폼 제출 시 validateDates 호출
+  document.getElementById('create_form').onsubmit = (event)=>{
+    if (!validateDates()){
+      event.preventDefault();
+    }
+  }
+
+</script>
+</html>

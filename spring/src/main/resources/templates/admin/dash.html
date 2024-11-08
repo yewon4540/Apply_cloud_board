@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dash</title>
+    <link rel="stylesheet" th:href="@{/css/admin/dash.css}">
+    <link rel="stylesheet" th:href="@{/css/board/background.css}">
+</head>
+<body>
+    <div id="wrap">
+        <!--배경 꾸미기 start-->
+        <img id="right_pcline" th:src="@{/img/board/right_pcline.png}" alt="우팝콘 라인" draggable="false">
+        <img id="left_pcline" th:src="@{/img/board/left_pcline.png}" alt="좌팝콘 라인" draggable="false">
+        <img id="down_pcs" th:src="@{/img/board/popcorns.png}" alt="아래팝콘들" draggable="false">
+        <!--배경 꾸미기 end-->
+
+        <h1>관리자 대시보드</h1>
+
+        <div class="post_box">
+
+            <div id="loading">
+                <div class="loading_box">
+                    <img id="loading_dumi" th:src="@{/img/admin/dumi2.png}">
+                    <p>스프레드 시트 불러오는 중...</p>
+                </div>
+            </div>
+
+            <!--읽기만 가능-->
+            <iframe id="spreadsheet" src="https://docs.google.com/spreadsheets/d/1HFS7xcyscQP25bzMGS77ZhYBSyssyJWvPVdD0wNn_yY/preview" width="100%" height="100%"></iframe>
+
+            <!--수정, 필터, 정렬 가능-->
+<!--            <iframe src="https://docs.google.com/spreadsheets/d/1HFS7xcyscQP25bzMGS77ZhYBSyssyJWvPVdD0wNn_yY/edit" width="100%" height="100%"></iframe>-->
+        </div>
+    </div>
+
+<script>
+    // iframe의 로딩이 완료되면 로딩 화면을 숨김
+    document.getElementById('spreadsheet').onload = function() {
+        document.getElementById('loading').classList.add('hidden');
+    };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Variable</title>
+  <link rel="stylesheet" th:href="@{/css/admin/variable.css}">
+  <link rel="stylesheet" th:href="@{/css/board/background.css}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div id="wrap">
+  <!--배경 꾸미기 start-->
+  <img id="right_pcline" th:src="@{/img/board/right_pcline.png}" alt="우팝콘 라인" draggable="false">
+  <img id="left_pcline" th:src="@{/img/board/left_pcline.png}" alt="좌팝콘 라인" draggable="false">
+  <img id="down_pcs" th:src="@{/img/board/popcorns.png}" alt="아래팝콘들" draggable="false">
+  <!--배경 꾸미기 end-->
+
+  <h1>관리자 변수</h1>
+
+  <div class="post_box">
+
+    <div class="toggle_box">
+      <div id="temp_btn">template</div>
+      <div id="temp_var_btn">temp_variable</div>
+    </div>
+
+    <div class="table_area">
+      <div class="table_box table1">
+
+        <div class="popup_bg">
+          <div class="popup_box">
+            <div class="popup">
+              <h2>변수 추가 폼</h2>
+              <ul>
+                <li>
+                  <span class="field_title">template_info</span>
+                  <input name="template_info" type="text">
+                </li>
+                <li>
+                  <span class="field_title">template_name</span>
+                  <input name="template_name" type="text">
+                </li>
+                <li>
+                  <span class="field_title">template_body</span>
+                  <input name="template_body" type="text">
+                </li>
+              </ul>
+
+              <div class="popup_btns">
+                <div class="close_btn">닫기</div>
+                <div class="add_btn">추가</div>
+                <div class="edit_complete_btn">수정</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="plus_box">
+          <span id="temp_plus">+</span>
+        </div>
+        <ul class="table_ul">
+          <li class="table_head">
+            <span th:text="tid"></span>
+            <span th:text="template_info"></span>
+            <span th:text="template_name"></span>
+            <span th:text="template_body"></span>
+            <span th:text="last_updated"></span>
+            <span th:text="옵션"></span>
+          </li>
+          <li th:each="item: ${tlist}">
+            <span th:text="${item.tid}"></span>
+            <span th:text="${item.templateInfo}"></span>
+            <span th:text="${item.templateName}"></span>
+            <span th:text="${item.templateBody}"></span>
+            <span th:text="${item.lastUpdated}"></span>
+            <div class="btn_box">
+              <div class="edit_btn">
+                <img th:src="@{/img/board/edit_icon.png}" alt="수정">
+              </div>
+              <div class="del_btn" th:data-id="${item.tid}">
+                <img th:src="@{/img/board/del_icon.png}" alt="수정">
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="table_box table2">
+
+        <div class="popup_bg">
+          <div class="popup_box">
+            <div class="popup">
+              <h2>변수 추가 폼</h2>
+              <ul>
+                <li>
+                  <span class="field_title">template_name</span>
+                  <input name="template_name" type="text">
+                </li>
+                <li>
+                  <span class="field_title">variable_name</span>
+                  <input name="variable_name" type="text">
+                </li>
+                <li>
+                  <span class="field_title">variable_type</span>
+                  <input name="variable_type" type="text">
+                </li>
+                <li>
+                  <span class="field_title">default_value</span>
+                  <input name="default_value" type="text">
+                </li>
+                <li>
+                  <span class="field_title">description</span>
+                  <input name="description" type="text">
+                </li>
+                <li>
+                  <span class="field_title">tid</span>
+                  <input name="tid" type="number">
+                </li>
+              </ul>
+
+              <div class="popup_btns">
+                <div class="close_btn">닫기</div>
+                <div class="add_btn">추가</div>
+                <div class="edit_complete_btn">수정</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="plus_box">
+          <span id="temp_var_plus">+</span>
+        </div>
+        <ul class="table_ul">
+          <li class="table_head">
+            <span th:text="tvid"></span>
+            <span th:text="template_name"></span>
+            <span th:text="variable_name"></span>
+            <span th:text="variable_type"></span>
+            <span th:text="default_value"></span>
+            <span th:text="description"></span>
+            <span th:text="last_updated"></span>
+            <span th:text="tid"></span>
+            <span th:text="옵션"></span>
+          </li>
+          <li th:each="item: ${tvlist}">
+            <span th:text="${item.tvid}"></span>
+            <span th:text="${item.templateName}"></span>
+            <span th:text="${item.variableName}"></span>
+            <span th:text="${item.variableType}"></span>
+            <span th:text="${item.defaultValue}"></span>
+            <span th:text="${item.description}"></span>
+            <span th:text="${item.lastUpdated}"></span>
+            <span th:text="${item.template.tid}"></span>
+            <div class="btn_box">
+              <div class="edit_btn">
+                <img th:src="@{/img/board/edit_icon.png}" alt="수정">
+              </div>
+              <div class="del_btn" th:data-id="${item.tvid}">
+                <img th:src="@{/img/board/del_icon.png}" alt="삭제">
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+
+<script>
+
+  const tempBtn = document.getElementById('temp_btn');
+  const tempVarBtn = document.getElementById('temp_var_btn');
+
+  const table1 = document.querySelector('.table1');
+  const table2 = document.querySelector('.table2');
+
+  tempBtn.addEventListener('click', ()=>{
+    table1.style.display='flex';
+    table2.style.display='none';
+
+    tempBtn.style.color='black';
+    tempBtn.style.borderBottom='0.2vw solid black';
+
+    tempVarBtn.style.color='lightgray';
+    tempVarBtn.style.borderBottom='none';
+
+  });
+
+  tempVarBtn.addEventListener('click', ()=>{
+    table1.style.display='none';
+    table2.style.display='flex';
+
+    tempVarBtn.style.color='black';
+    tempVarBtn.style.borderBottom='0.2vw solid black';
+
+    tempBtn.style.color='lightgray';
+    tempBtn.style.borderBottom='none';
+
+  });
+
+
+  const tempPlusBtn = document.getElementById('temp_plus');
+  const tempVarPlusBtn = document.getElementById('temp_var_plus');
+  const popupBg1 = document.getElementsByClassName('popup_bg')[0];
+  const popupBg2 = document.getElementsByClassName('popup_bg')[1];
+
+  const closeBtn1 = document.getElementsByClassName('close_btn')[0];
+  const closeBtn2 = document.getElementsByClassName('close_btn')[1];
+
+  const editBtn1 = document.getElementsByClassName('edit_complete_btn')[0];
+  const editBtn2 = document.getElementsByClassName('edit_complete_btn')[1];
+
+  tempPlusBtn.addEventListener('click', ()=>{
+    popupBg1.style.display='block';
+
+    $('input[name="template_info"]').val("");
+    $('input[name="template_name"]').val("");
+    $('input[name="template_body"]').val("");
+
+    editBtn1.style.display="none";
+    addBtn1.style.display="block";
+
+  });
+
+  tempVarPlusBtn.addEventListener('click', ()=>{
+    popupBg2.style.display='block';
+
+    $('input[name="template_name"]').val("");
+    $('input[name="variable_name"]').val("");
+    $('input[name="variable_type"]').val("");
+    $('input[name="default_value"]').val("");
+    $('input[name="description"]').val("");
+    $('input[name="tid"]').val("");
+
+    editBtn2.style.display="none";
+    addBtn2.style.display="block";
+  });
+
+  closeBtn1.addEventListener('click', ()=>{
+    popupBg1.style.display='none';
+  });
+
+  closeBtn2.addEventListener('click', ()=>{
+    popupBg2.style.display='none';
+  });
+
+
+  const addBtn1 = document.getElementsByClassName('add_btn')[0];
+  const addBtn2 = document.getElementsByClassName('add_btn')[1];
+
+  addBtn1.addEventListener('click', function () {
+      const data = {
+        templateInfo: document.querySelector('input[name="template_info"]').value
+        , templateName: document.querySelector('input[name="template_name"]').value
+        , templateBody: document.querySelector('input[name="template_body"]').value
+      }
+
+      fetch('api/addTemplate', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+      })
+      .then(response =>{
+        if (response.ok){
+          popupBg1.style.display='none';
+
+          // 특정 영역만 업데이트 (AJAX)
+          $('.table_box.table1 .table_ul').load(location.href+' .table_box.table1 .table_ul');
+
+        } else{
+          alert("추가에 실패했습니다.");
+        }
+      })
+      .catch(error=>console.error('Error:', error));
+  });
+
+  $('.table1').on('click', '.edit_btn', function () {
+    const row = $(this).closest('li'); //클릭한 버튼이 속한 li 요소
+    const tid = $(this).siblings('.del_btn').data('id'); //삭제 버튼에서 tid 가져오기
+    const templateInfo = row.find('span:nth-child(2)').text();
+    const templateName = row.find('span:nth-child(3)').text();
+    const templateBody = row.find('span:nth-child(4)').text();
+
+    // 수정 팝업에 값 세팅
+    $('input[name="template_info"]').val(templateInfo);
+    $('input[name="template_name"]').val(templateName);
+    $('input[name="template_body"]').val(templateBody);
+
+    //수정 팝업 보여주기
+    popupBg1.style.display='block';
+    addBtn1.style.display='none'; // 추가 버튼 숨김
+    editBtn1.style.display='block'; // 수정 완료 버튼 표시
+    editBtn1.setAttribute('data-id', tid); // 수정 버튼에 tid 설정
+
+  });
+
+  $('.table1').on('click', '.edit_complete_btn', function () {
+    const tid=editBtn1.getAttribute('data-id'); // 설정한 tid 값 가져오기
+    const data = {
+      tid: tid
+      , templateInfo: $('input[name="template_info"]').val()
+      , templateName: $('input[name="template_name"]').val()
+      , templateBody: $('input[name="template_body"]').val()
+    };
+
+    fetch(`api/updateTemplate?tid=${tid}`, {
+      method: 'PUT'
+      , headers: {'Content-Type': 'application/json'}
+      , body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (response.ok){
+        popupBg1.style.display='none';
+        $('.table_box.table1 .table_ul').load(location.href + ' .table_box.table1 .table_ul')
+      } else{
+        alert("수정에 실패했습니다.");
+      }
+    })
+    .catch(error=>console.error('Error: ', error));
+  });
+
+  $('.table1').on('click', '.del_btn', function () {
+    const tid = $(this).data('id'); //data-id에서 tid값 가져오기
+    const confirmed = confirm("해당 행을 삭제하시겠습니까?");
+
+    if (confirmed){
+      fetch(`api/deleteTemplate?tid=${tid}`, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        if (response.ok){
+          $('.table_box.table1 .table_ul').load(location.href+' .table_box.table1 .table_ul');
+        } else {
+          alert("삭제에 실패했습니다.");
+        }
+      })
+      .catch(error=>console.error('Error:', error));
+    }
+
+  });
+
+
+  addBtn2.addEventListener('click', function () {
+
+      const tid = parseInt(document.querySelector('input[name="tid"]').value, 10)
+
+      const data ={
+        templateName: document.querySelectorAll('input[name="template_name"]')[1].value
+        , variableName: document.querySelector('input[name="variable_name"]').value
+        , variableType: document.querySelector('input[name="variable_type"]').value
+        , defaultValue: document.querySelector('input[name="default_value"]').value
+        , description: document.querySelector('input[name="description"]').value
+      }
+
+      fetch(`api/addTempVariable?tid=${tid}`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (response.ok){
+          popupBg2.style.display='none';
+
+          // 특정 영역만 업데이트 (AJAX)
+          $('.table_box.table2 .table_ul').load(location.href+' .table_box.table2 .table_ul');
+        } else {
+          alert("추가에 실패했습니다.");
+        }
+      })
+      .catch(error=>console.error('Error:',error));
+  });
+
+  $('.table2').on('click', '.edit_btn', function () {
+    const row = $(this).closest('li'); //클릭한 버튼이 속한 li 요소
+    const tvid = $(this).siblings('.del_btn').data('id'); //삭제 버튼에서 tid 가져오기
+    const templateName = row.find('span:nth-child(2)').text();
+    const variableName = row.find('span:nth-child(3)').text();
+    const variableType = row.find('span:nth-child(4)').text();
+    const defaultValue = row.find('span:nth-child(5)').text();
+    const description = row.find('span:nth-child(6)').text();
+    const tid = parseInt(row.find('span:nth-child(8)').text(), 10);
+
+    // 수정 팝업에 값 세팅
+    $('input[name="template_name"]').val(templateName);
+    $('input[name="variable_name"]').val(variableName);
+    $('input[name="variable_type"]').val(variableType);
+    $('input[name="default_value"]').val(defaultValue);
+    $('input[name="description"]').val(description);
+    $('input[name="tid"]').val(tid);
+
+
+    //수정 팝업 보여주기
+    popupBg2.style.display='block';
+    addBtn2.style.display='none'; // 추가 버튼 숨김
+    editBtn2.style.display='block'; // 수정 완료 버튼 표시
+    editBtn2.setAttribute('data-id', tvid); // 수정 버튼에 tid 설정
+
+  });
+
+  $('.table2').on('click', '.edit_complete_btn', function () {
+
+    console.log('table2에 edit_complete_btn 클릭!!!!!');
+
+    const tvid=editBtn2.getAttribute('data-id'); // 설정한 tvid 값 가져오기
+    const tid= parseInt($('input[name="tid"]').val(), 10); //넘길 tid값 가져오기
+    const data = {
+      tvid: tvid
+      , templateName: $('input[name="template_name"]').eq(1).val()
+      , variableName: $('input[name="variable_name"]').val()
+      , variableType: $('input[name="variable_type"]').val()
+      , defaultValue: $('input[name="default_value"]').val()
+      , description: $('input[name="description"]').val()
+      , tid: parseInt($('input[name="tid"]').val(), 10)
+    };
+
+    fetch(`api/updateTempVariable?tvid=${tvid}&tid=${tid}`, {
+      method: 'PUT'
+      , headers: {'Content-Type': 'application/json'}
+      , body: JSON.stringify(data)
+    })
+            .then(response => {
+              if (response.ok){
+                popupBg2.style.display='none';
+                $('.table_box.table2 .table_ul').load(location.href + ' .table_box.table2 .table_ul')
+              } else{
+                alert("수정에 실패했습니다.");
+              }
+            })
+            .catch(error=>console.error('Error: ', error));
+  });
+
+
+  $('.table2').on('click', '.del_btn', function () {
+    const tvid = $(this).data('id'); //data-id에서 tvid값 가져오기
+    const confirmed = confirm("해당 행을 삭제하시겠습니까?");
+
+    if (confirmed){
+      fetch(`api/deleteTempVar?tvid=${tvid}`, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        if (response.ok){
+          $('.table_box.table2 .table_ul').load(location.href+' .table_box.table2 .table_ul');
+        } else {
+          alert("삭제에 실패했습니다.");
+        }
+      })
+      .catch(error=>console.error('Error:', error));
+    }
+
+  })
+
+</script>
+</html>

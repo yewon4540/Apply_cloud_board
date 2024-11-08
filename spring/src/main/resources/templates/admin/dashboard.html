@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 홈</title>
+    <link rel="stylesheet" th:href="@{/css/admin/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/board/background.css}">
+</head>
+<body>
+
+<div id="wrap">
+
+    <!--배경 꾸미기 start-->
+    <img id="right_pcline" th:src="@{/img/board/right_pcline.png}" alt="우팝콘 라인" draggable="false">
+    <img id="left_pcline" th:src="@{/img/board/left_pcline.png}" alt="좌팝콘 라인" draggable="false">
+    <img id="down_pcs" th:src="@{/img/board/popcorns.png}" alt="아래팝콘들" draggable="false">
+    <!--배경 꾸미기 end-->
+
+    <h1>관리자 홈</h1>
+<!--    <a href="/logout">-->
+<!--        <button class="logout_button">로그아웃</button>-->
+<!--    </a>-->
+    <div class="board_box">
+        <div class="board_row">
+            <a th:href="@{/dash}">
+                <div class="board_item">
+                    <h2>Dash</h2>
+                </div>
+            </a>
+
+            <a th:href="@{/variable}">
+                <div class="board_item">
+                    <h2>Variable</h2>
+                </div>
+            </a>
+
+        </div>
+
+        <div class="board_row">
+            <a th:href="@{/apply}">
+                <div class="board_item">
+                    <h2>Apply</h2>
+                </div>
+            </a>
+
+            <a th:href="@{/etc}">
+                <div class="board_item">
+                    <h2>ETC</h2>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

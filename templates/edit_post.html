@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글 수정</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create_post.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_post.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/background.css') }}">
+</head>
+<body>
+    <div id="wrap">
+
+        <!--배경 꾸미기 start-->
+        <img id="right_pcline" src="{{ url_for('static', filename='images/board/right_pcline.png') }}" alt="우팝콘 라인" draggable="false">
+        <img id="left_pcline" src="{{ url_for('static', filename='images/board/left_pcline.png') }}" alt="좌팝콘 라인" draggable="false">
+        <img id="down_pcs" src="{{ url_for('static', filename='images/board/popcorns.png') }}" alt="아래팝콘들" draggable="false">
+        <!--배경 꾸미기 end-->
+
+        <div class="post_box">
+            <form method="POST" action="{{ url_for('edit_post', post_id=post['_id']) }}">
+                
+                <h2>글 수정</h2>
+                
+                <table>
+                    <tr>
+                        <td><label for="title">글 제목 :</label></td>
+                        <td><input type="text" id="title" name="title" value="{{ post['title'] }}" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="service">사용 서비스 :</label></td>
+                        <td>
+                            <select id="service" name="service" required>
+                                <option value="EC2" {% if post['service'] == 'EC2' %}selected{% endif %}>EC2</option>
+                                <option value="S3" {% if post['service'] == 'S3' %}selected{% endif %}>S3</option>
+                                <option value="RDS" {% if post['service'] == 'RDS' %}selected{% endif %}>RDS</option>
+                                <option value="Lambda" {% if post['service'] == 'Lambda' %}selected{% endif %}>Lambda</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="reason">필요 사유 :</label></td>
+                        <td><textarea id="reason" name="reason" class="maintext" required> {{ post['reason'] }}</textarea></td>
+                    </tr>
+                    <tr>
+                        <td><label for="start_date">사용 기간 :</label></td>
+                        <td>
+                            <input type="text" name="start_date" id="start_date" value="{{ post['start_date'] }}" readonly>
+                            ~
+                            <input type="text" name="end_date" id="end_date" value="{{ post['end_date'] }}" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="status">상태 :</label></td>
+                        <td>
+                            <select id="status" name="status" required>
+                                <option value="요청" {% if post['status'] == '요청' %}selected{% endif %}>요청</option>
+                                <option value="승인" {% if post['status'] == '승인' %}selected{% endif %}>승인</option>
+                                <option value="반려" {% if post['status'] == '반려' %}selected{% endif %}>반려</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button type="submit">수정 완료</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

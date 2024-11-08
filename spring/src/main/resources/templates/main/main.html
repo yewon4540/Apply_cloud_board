@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/index/main.css}">
+</head>
+<body>
+    <div id="wrap">
+        <div class="text_box">
+            <h1>디지털러닝팀 <br> 클라우드 요청 게시판</h1>
+
+            <a th:if="${existIp}" href="/create_post">
+                <h6> AWS 리소스 신청 > </h6>
+            </a>
+
+            <a th:unless="${existIp}" class="no_auth" href="/">
+                <h6> AWS 리소스 신청 > </h6>
+            </a>
+        </div>
+
+        <img id="popcorns_line" th:src="@{/img/main/popcorns_line.png}" alt="팝콘 라인" draggable="false">
+        <img id="popcorn1" th:src="@{/img/main/corn1.png}" alt="팝콘1" draggable="false">
+        <img id="popcorn2" th:src="@{/img/main/corn2.png}" alt="팝콘2" draggable="false">
+        <img id="dumi" th:src="@{/img/main/dumi.png}" alt="듬이" draggable="false">
+        <img id="popcorn" th:src="@{/img/main/popcorn.png}" alt="클라우드 팝콘" draggable="false">
+
+
+    </div>
+</body>
+<script>
+    // 클래스가 'no_auth'인 모든 요소를 선택
+    const noAuthElements = document.querySelectorAll('.no_auth');
+
+    // 선택된 모든 요소에 대해 이벤트 리스너 등록
+    noAuthElements.forEach(element => {
+        element.addEventListener('click', () => {
+            alert("권한이 없습니다! 관리자에게 문의하세요");
+        });
+    });
+</script>
+</html>

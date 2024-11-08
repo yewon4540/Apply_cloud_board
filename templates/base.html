@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
+    <title>디지털러닝팀 클라우드 요청 게시판</title>
+    
+</head>
+<body>
+    <!-- header Start -->
+    <header>
+        
+        <div class="menu_box">
+            <div class="logo_box">
+                <a href="/">
+                    <img src="{{ url_for('static', filename='images/main/logo.jpg') }}" alt="로고" draggable="false">
+                </a>
+            </div>
+
+            <nav>
+                <ul>
+                    <li>
+                        <a id="apply_aws" href="/posts">
+                            AWS신청
+                        </a>
+                    </li>
+                    <li>
+                        <a id="apply_ncp" href="#">
+                            NCP신청
+                        </a>
+                    </li>
+                    <li>
+                        <a id="admin_page" href="/login">
+                            관리자페이지
+                        </a>
+                    </li>
+                </ul>
+                
+            </nav>
+            
+        </div>
+    </header>
+    <!-- header End -->
+
+    {% block content %}
+
+    {% endblock %}
+    
+
+    
+</body>
+
+<script>
+    document.getElementById('apply_ncp').addEventListener('click', ()=>{
+        alert("준비 중인 기능입니다!");
+    })
+</script>
+
+</html>

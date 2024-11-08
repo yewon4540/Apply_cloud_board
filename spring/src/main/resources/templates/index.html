@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>디지털 러닝팀 클라우드 요청 게시판</title>
+    <link rel="stylesheet" th:href="@{/css/index/header.css}">
+
+    <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}">
+
+</head>
+<body>
+
+    <!-- 헤더 고정 -->
+    <header th:replace="~{fragments/header :: header}"></header>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main>
+        <div th:replace="~{${view}}"></div>
+    </main>
+
+</body>
+
+</html>

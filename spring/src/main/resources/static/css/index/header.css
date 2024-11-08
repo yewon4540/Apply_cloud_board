@@ -1,0 +1,134 @@
+/*폰트*/
+
+@font-face {
+    font-family: 'omyu-pretty';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'jua';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/*모든 페이지 기본 설정*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* 상단바 영역 */
+header{
+    position: fixed;
+    height: 50px;
+    width: 100%;
+    background: white;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 99;
+}
+
+
+/*로고 영역*/
+.logo_box{
+    display: flex;
+    align-items: center;
+}
+.logo_box img{
+    width: 100px;
+}
+
+
+
+/*메뉴 영역*/
+.menu_box{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+
+}
+.menu_box ul{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+}
+.menu_box ul a{
+    font-family: 'omyu-pretty';
+    text-decoration: none;
+    color: black;
+    font-size: 22px;
+    padding: 14px 0;
+}
+
+.sub_menu{
+    display: none; /* 기본적으로 숨김 */
+    position: absolute; /* 부모 메뉴 항목에 상대적으로 위치 */
+    background: white;
+    border-radius: 0 0 15px 15px;
+    top: 50px;
+    animation: slideDown 0.3s ease forwards; /* 애니메이션 추가 */
+}
+
+.sub_menu ul{
+    flex-direction: column;
+    position: relative;
+}
+
+.sub_menu ul li{
+    margin: 0 auto;
+}
+
+.sub_menu ul li a{
+    font-family: 'omyu-pretty';
+    text-decoration: none;
+    color: black;
+    font-size: 22px;
+    display: inline-block;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* 부모 메뉴 항목에 마우스를 올렸을 때 서브 메뉴 보이기 */
+.menu_box li:hover .sub_menu {
+    display: block; /* 서브 메뉴 표시 */
+}
+
+.sub_menu ul li a:hover{
+    color: #4A90E2;
+}
+
+
+@keyframes slideUp { /*보드가 위로 올라오는 애니메이션*/
+    0% {
+        opacity: 0;
+        transform: translateY(5vw);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 서브 메뉴 애니메이션 정의 */
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px); /* 위에서 아래로 내려오는 애니메이션 */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

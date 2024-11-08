@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신청 글 목록</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/background.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/posts.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</head>
+<body>
+    <div id="wrap">
+
+        <!--배경 꾸미기 start-->
+        <img id="right_pcline" src="{{ url_for('static', filename='images/board/right_pcline.png') }}" alt="우팝콘 라인" draggable="false">
+        <img id="left_pcline" src="{{ url_for('static', filename='images/board/left_pcline.png') }}" alt="좌팝콘 라인" draggable="false">
+        <img id="down_pcs" src="{{ url_for('static', filename='images/board/popcorns.png') }}" alt="아래팝콘들" draggable="false">
+        <!--배경 꾸미기 end-->
+
+        <div class="post_box">
+            <h2>AWS 신청 목록</h2>
+            
+            <div class="right_btn_box">
+                <a id="apply_btn" href="/create_post">
+                    리소스 신청
+                </a>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th class="title_border">제목</th>
+                        <th class="status_border status">상태</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for post in posts %}
+                    <tr>
+                        <td class="clickable" data-href="{{ url_for('view_post', post_id=post['_id']) }}">
+                            <div class="title">
+                                <p>
+                                    {{ post['title'] }}
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="status">
+                                {{ post['status'] }}
+                            </p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+            <div class="pagination">
+                <!-- 이전 버튼 -->
+                {% if page > 1 %}
+                    <a href="{{ url_for('posts', page=page-1) }}">이전</a>
+                {% endif %}
+
+                <!-- 페이지 넘버 링크 -->
+                {% set start_page = ((page - 1) // 5) * 5 + 1 %}
+                {% set end_page = start_page + 4 %}
+                {% if end_page > total_pages %}
+                    {% set end_page = total_pages %}
+                {% endif %}
+
+                <!--첫글 버튼 하려면 사용-->
+                <!-- {% if start_page > 1 %}
+                    <a href="{{ url_for('posts', page=1) }}">1</a>
+                    {% if start_page > 2 %}
+                        <span>...</span>
+                    {% endif %}
+                {% endif %} -->
+
+                {% for p in range(start_page, end_page + 1) %}
+                    <a href="{{ url_for('posts', page=p) }}" class="{{ 'active' if p == page }}">{{ p }}</a>
+                {% endfor %}
+
+                <!--마지막글 버튼 하려면 사용-->
+                <!-- {% if end_page < total_pages %}
+                    {% if end_page < total_pages - 1 %}
+                        <span>...</span>
+                    {% endif %}
+                    <a href="{{ url_for('posts', page=total_pages) }}">{{ total_pages }}</a>
+                {% endif %} -->
+
+                <!-- 다음 버튼 -->
+                {% if page < total_pages %}
+                    <a href="{{ url_for('posts', page=page+1) }}">다음</a>
+                {% endif %}
+            </div>
+
+        </div>
+        
+    </div>
+
+</body>
+
+{% endblock %}

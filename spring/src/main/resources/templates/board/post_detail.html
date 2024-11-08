@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 보기</title>
+    <link rel="stylesheet" th:href="@{/css/board/view_post.css}">
+    <link rel="stylesheet" th:href="@{/css/board/background.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div id="wrap">
+
+    <!--배경 꾸미기 start-->
+    <img id="right_pcline" th:src="@{/img/board/right_pcline.png}" alt="우팝콘 라인" draggable="false">
+    <img id="left_pcline" th:src="@{/img/board/left_pcline.png}" alt="좌팝콘 라인" draggable="false">
+    <img id="down_pcs" th:src="@{/img/board/popcorns.png}" alt="아래팝콘들" draggable="false">
+    <!--배경 꾸미기 end-->
+
+    <div class="post_box">
+        <div class="post-container">
+            <div>
+                <div class="title_area">
+                    <a href="/posts">
+                        <img id="back_btn" th:src="@{/img/board/back_arrow.png}" alt="뒤로가기" draggable="false">
+                    </a>
+                    <h1 th:text="${dto.title}"></h1>
+                    <input id="board_id" type="hidden" th:value="${dto.aid}">
+                </div>
+
+                <div class="actions" th:if="${session.clientRole eq 'admin'}">
+                    <input id="check_admin" type="hidden" th:value="admin">
+                    <a class="edit-button" th:href="@{/edit_post/{postId}(postId=${dto.aid})}">수정</a>
+                    <form method="post" th:action="@{/delete_post/{postId}(postId=${dto.aid})}" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
+                        <button class="delete-button" type="submit">삭제</button>
+                    </form>
+                </div>
+                <div class="line"></div>
+            </div>
+
+            <div class="post-details">
+                <p><strong>서비스:</strong> <span th:text="${dto.service}"></span></p>
+                <pre><strong>필요 사유:</strong> <span th:text="${dto.reason}"></span></pre>
+                <p><strong>사용 기간:</strong> <span th:text="|${dto.startDate} ~ ${dto.endDate}|"></span></p>
+                <p><strong>상태:</strong> <span th:text="${dto.status}"></span></p>
+                <p><strong>신청자:</strong> <span th:text="${dto.author}"></span></p>
+                <p><strong>작성일:</strong> <span th:text="${#temporals.format(dto.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+                <p th:if="${dto.attachmentPath}">
+                    <strong>첨부파일:</strong>
+                    <a th:href="@{'/posts/' + ${dto.aid} + '/download'}" th:text="다운로드"></a>
+                </p>
+            </div>
+
+            <h2>댓글</h2>
+
+            <div class="comments_box">
+                <ul th:if="${comments.size() > 0}" th:each="item: ${comments}">
+                    <li th:attr="data-id=${item.cid}">
+                        <div class="comment">
+                            <div class="comment_content">
+                                <div class="user_area">
+                                    <h3 th:text="${item.author}"></h3>
+                                    <span th:class="|category-${item.cate}|" th:text="${item.cate}"></span>
+                                </div>
+                                <div class="comment_area">
+                                    <!-- 댓글 내용을 보여주는 부분 -->
+                                    <pre class="comment-text" th:text="${item.comment}"></pre>
+                                    <!-- 댓글 수정용 입력창, 기본적으로 숨겨짐 -->
+<!--                                    <input type="text" class="comment-input" th:value="${item.comment}" style="display:none;">-->
+                                    <textarea class="comment-input" style="display:none;">[[${item.comment}]]</textarea>
+                                </div>
+                                <p th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd HH:mm')}"></p>
+                            </div>
+
+                            <div class="btn_box" th:if="${session.clientRole eq 'admin'}">
+                                <!-- 관리자인 경우 추가 옵션(수정, 삭제)을 보여줌 -->
+                                <button type="button" class="edit-button" th:onclick="'showEditInput('+${item.cid}+')'">수정</button>
+                                <button type="button" class="delete-button" th:onclick="'deleteComment(' + ${item.cid} + ')'">삭제</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul th:unless="${comments.size() > 0}" class="no_rep">
+                    <li>
+                        <p class="basic_font">댓글이 없습니다.</p>
+                    </li>
+                </ul>
+            </div>
+
+
+            <form id="commentForm" method="POST" th:action="@{'/posts/' + ${dto.aid} + '/comments'}">
+                <td>
+                    <select class="form-select" id="categoryInput" name="categoryInput" required>
+                        <option value="문의">문의</option>
+                        <th:block th:if="${session.clientRole eq 'admin'}">
+                            <!--관리자인 경우 추가 옵션을 보여줌-->
+                            <option value="답변">답변</option>
+                            <option value="활동기록">활동기록</option>
+                            <option value="수정사항">수정사항</option>
+                        </th:block>
+                    </select>
+                </td>
+
+                <textarea id="commentInput" name="commentInput" cols="20" rows="4" placeholder="댓글을 입력하세요"></textarea>
+                <button id="write_btn" type="submit">댓글<br>작성</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script type="text/javascript">
+
+    var isAdmin = $('#check_admin').val() === 'admin'; // 관리자인지 확인
+
+    $('#commentForm').on('submit', function(event) {
+        event.preventDefault(); // 폼의 기본 동작 방지
+
+        var category = $('#categoryInput').val();
+        var comment = $('#commentInput').val().trim(); // 공백 제거
+
+        console.log(category, comment)
+
+        // 댓글이 공백인 경우 alert 띄우기
+        if (comment === '') {
+            alert('댓글을 입력해주세요!');
+            return; // 요청 중단
+        }
+
+        var formData = {
+            cate: category,
+            comment: comment,
+        };
+
+        console.log('formData: '+formData);
+
+        $.ajax({
+            type: 'POST',
+            url: '/posts/' + $('#board_id').val() + '/comments', // 적절한 URL로 교체
+            data: JSON.stringify(formData),  // JSON 형식으로 데이터 전송
+            contentType: 'application/json', // 요청의 Content-Type을 JSON으로 설정
+            success: function(response) {
+
+                var createdAt = new Date(response.createdAt);
+
+                // 날짜 부분 (yyyy-MM-dd)
+                var datePart = createdAt.getFullYear() + '-' +
+                    String(createdAt.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(createdAt.getDate()).padStart(2, '0');
+
+                // 시간 부분 (HH:mm)
+                var timePart = String(createdAt.getHours()).padStart(2, '0') + ':' +
+                    String(createdAt.getMinutes()).padStart(2, '0');
+
+                // 최종 포맷: yyyy-MM-dd HH:mm
+                var formattedDate = datePart + ' ' + timePart;
+
+                // "댓글이 없습니다." 메시지가 있는지 확인하고 제거
+                if ($('.no_rep').length > 0) {
+                    $('.no_rep').remove();
+                }
+
+                // 서버에서 받아온 댓글 데이터를 사용
+                $('.comments_box').append(
+                    '<li data-id="' + response.cid + '">' + // 여기에서 cid를 데이터 속성으로 사용
+                    '<div class="comment">' +
+                    '<div class="comment_content">' +
+                    '<div class="user_area">' +
+                    '<h3>' + response.author + '</h3>' +
+                    '<span class="category-' + response.cate + '">' + response.cate + '</span>' +
+                    '</div>' +
+                    '<div class="comment_area">' +
+                    '<pre class="comment-text">' + response.comment + '</pre>' +
+                    '<textarea class="comment-input" style="display:none;">' + response.comment + '</textarea>' +
+                    '</div>' +
+                    '<p>' + formattedDate + '</p>' +
+                    '</div>' +
+
+                    (isAdmin ? '<div class="btn_box">' +
+                        '<button type="button" class="edit-button" onclick="showEditInput(' + response.cid + ')">수정</button>' +
+                        '<button type="button" class="delete-button" onclick="deleteComment(' + response.cid + ')">삭제</button>' +
+                        '</div>' : '') + // 관리자인 경우 삭제 버튼 추가
+
+                    '</div>' +
+                    '</li>'
+                );
+
+                $('#commentInput').val(''); // 댓글 입력창 비우기
+
+                console.log(response)
+            },
+            error: function(error) {
+                alert('댓글 추가에 실패했습니다.');
+            }
+        });
+    });
+
+
+    function showEditInput(commentId) {
+        var commentLi = $('li[data-id="' + commentId + '"]');
+        var commentText = commentLi.find('.comment-text');
+        var commentInput = commentLi.find('.comment-input');
+        var editButton = commentLi.find('.edit-button');
+
+        // 기존 텍스트를 입력창에 설정
+        commentInput.val(commentText.text()).show();
+        commentText.hide(); // 댓글 텍스트 숨김
+
+        // 수정 버튼 숨김
+        editButton.hide();
+
+        // 수정 완료 버튼 추가
+        if (commentLi.find('.edit-complete-button').length === 0) {
+            editButton.after('<button class="edit-complete-button" onclick="editComment(' + commentId + ', this)">수정완료</button>');
+        }
+    }
+
+    function editComment(commentId, button) {
+        var commentLi = $('li[data-id="' + commentId + '"]');
+        var commentInput = commentLi.find('.comment-input');
+        var updatedComment = commentInput.val().trim(); // 공백 제거
+
+        if (updatedComment === '') {
+            alert('댓글 내용을 입력해주세요!');
+            return; // 요청 중단
+        }
+
+        // AJAX 호출로 댓글 수정
+        $.ajax({
+            type: 'POST',
+            url: '/posts/' + $('#board_id').val() + '/comments/edit',
+            contentType: 'application/json',
+            data: JSON.stringify({ cid: commentId, comment: updatedComment }), // 수정할 댓글 정보 전송
+            success: function(response) {
+                commentLi.find('.comment-text').text(response.comment).show(); // 수정된 댓글 텍스트 표시
+                commentInput.hide(); // 입력창 숨김
+
+                // 수정 완료 버튼 제거 및 수정 버튼 다시 표시
+                $(button).remove();
+                commentLi.find('.edit-button').show();
+            },
+            error: function(error) {
+                alert('댓글 수정에 실패했습니다.');
+            }
+        });
+    }
+
+
+    function deleteComment(commentId) {
+        if (confirm('정말로 삭제하시겠습니까?')) {
+            $.ajax({
+                type: 'POST',
+                url: '/posts/' + $('#board_id').val() + '/comments/delete',
+                contentType: 'application/json',
+                data: JSON.stringify(commentId), // 댓글 ID 전송
+                success: function(response) {
+                    // 댓글 삭제 성공 시 UI에서 해당 댓글 제거
+                    $('li[data-id="' + commentId + '"]').remove(); // 댓글 ID를 가진 <li> 요소를 직접 선택
+
+                    // 남은 댓글이 있는지 확인
+                    if ($('.comments_box li').length === 0) {
+                        // 댓글이 없으면 '댓글이 없습니다' 메시지 추가
+                        $('.comments_box').append(
+                            '<ul class="no_rep">' +
+                            '<li><p class="basic_font">댓글이 없습니다.</p></li>' +
+                            '</ul>'
+                        );
+                    }
+                },
+                error: function(error) {
+                    alert('댓글 삭제에 실패했습니다.');
+                }
+            });
+        }
+    }
+</script>
+
+</html>

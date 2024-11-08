@@ -1,0 +1,260 @@
+
+/* 전체 감싸는 영역 */
+#wrap { 
+    width: 100%;
+    height: 100vh;
+    background: #020056;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+
+/* 보드 영역 */
+.post_box { 
+    height: 37vw;
+    background: whitesmoke;
+    padding: 1vw;
+    border-radius: 3vw;
+    width: 50%;
+    box-shadow: 0 0.5vw 1vw rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+.post-container{
+    height: 34vw;
+    overflow: scroll;
+    overflow-x: hidden;
+    padding: 1.5vw;
+}
+
+
+/*스크롤바 커스텀*/
+.post-container::-webkit-scrollbar{ 
+    /*스크롤바 너비*/
+    width: 0.5vw;
+}
+.post-container::-webkit-scrollbar-thumb{
+    /*스크롤바 높이*/
+    height: 30%;
+    /*스크롤바 색상*/
+    background: lightgrey;
+    border-radius: 1vw;
+}
+.post-container::-webkit-scrollbar-track{
+    /*스크롤바 뒷 배경 색상*/
+    background: white;
+    border-radius: 0.5vw;
+    margin: 2vw;
+}
+
+.post-container h1 { /* 게시글 제목 */
+    font-family: 'omyu-pretty';
+    font-size: 2vw;
+    margin-bottom: 1vw;
+    word-break: break-all;
+}
+#back_btn{ /* 뒤로가기 버튼*/
+    width: 0.5vw;
+    margin-right: 0.5vw;
+}
+.line{ /* 구분선 */
+    width: 100%;
+    background-color: lightgrey;
+    height: 0.1vw;
+    margin-bottom: 1.5vw;
+}
+
+
+/* 게시글 세부 내용 */
+.post-details {
+    font-family: 'omyu-pretty';
+    font-size: 1vw;
+    margin-bottom: 2vw;
+    background: white;
+    padding: 1vw;
+    border-radius: 2vw;
+}
+.post-details pre{
+    font-family: 'omyu-pretty';
+}
+.post-details p {
+    margin: 0.5vw 0;
+}
+.post-details strong {
+    color: #020056;
+}
+
+
+/* 수정, 삭제 버튼 */
+.actions {
+    position: relative;
+    top: -0.8vw;
+    display: flex;
+    justify-content: right;
+}
+.edit-button, .delete-button {
+    text-decoration: none;
+    padding: 0.5vw 1vw;
+    border-radius: 0.5vw;
+    color: white;
+    font-family: 'omyu-pretty';
+    font-size: 1vw;
+    cursor: pointer;
+}
+.edit-button {
+    background-color: #0284c7; /* 수정 버튼 색상 */
+    border: 0.1vw solid #0284c7;
+}
+.edit-button:hover {
+    background-color: #0369a1; /* 수정 버튼 호버 색상 */
+}
+.delete-button {
+    background-color: #ef4444; /* 삭제 버튼 색상 */
+    border: 0.1vw solid #ef4444;
+    white-space: nowrap;
+}
+
+.delete-button:hover {
+    background-color: #dc2626; /* 삭제 버튼 호버 색상 */
+}
+
+
+/* 댓글 영역 */
+.post-container>h2{
+    font-family: 'omyu-pretty';
+    font-size: 1.8vw;
+}
+.comments_box li{
+    list-style: none;
+    padding: 1vw;
+    background: white;
+    border-radius: 1.5vw;
+    margin: 1vw 0;
+}
+.comment{
+    display: flex;
+    justify-content: space-between;
+}
+.comment_content{
+    font-family: 'omyu-pretty';
+    font-size: 1vw;
+    margin: 0.1vw 0.2vw;
+    word-break: break-all;
+}
+.comment_content h4{
+    font-size: 1.1vw;
+}
+.comment_content h3, h4{
+    margin-bottom: 0.5vw;
+}
+.comment_content h4, p, span{
+    font-weight: normal;
+}
+.comment_content p{
+    color: darkgray;
+    font-size: 0.8vw;
+    position: relative;
+    bottom: -0.5vw;
+}
+.basic_font{
+    font-family: 'omyu-pretty';
+    font-size: 1vw;
+}
+.comment_content span{
+    padding: 0.3vw;
+    border-radius: 1vw;
+    font-size: 1vw;
+}
+
+.comment_content .category-문의 {
+    background-color: #F6F7C4; /* '문의' 카테고리 색상 */
+}
+
+.comment_content .category-답변 {
+    background-color: #7BD3EA; /* '답변' 카테고리 색상 */
+}
+
+.comment_content .category-활동기록 {
+    background-color: #F6D6D6; /* '활동기록' 카테고리 색상 */
+}
+
+.comment_content .category-수정사항 {
+    background-color: #A1EEBD; /* '수정사항' 카테고리 색상 */
+}
+
+#comment_delete_btn{ /*댓글 삭제 버튼*/
+    border-radius: 1vw;
+}
+
+
+/* 댓글 작성 폼 */
+form {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5vw;
+}
+
+form select,
+form input[type="text"],
+form button {
+    margin-right: 1vw;
+}
+
+form input[type="text"] {
+    padding: 0.5vw;
+    border: 0.1vw solid #ddd;
+    border-radius: 0.5vw;
+    font-family: 'omyu-pretty';
+}
+
+#write_btn {
+    background-color: #020056;
+    color: white;
+    padding: 0.6vw;
+    border: none;
+    border-radius: 1vw;
+    cursor: pointer;
+    font-family: 'omyu-pretty';
+    margin-left: 1vw;
+    font-size: 1vw;
+}
+
+#write_btn:hover {
+    background-color: #03076D;
+}
+
+
+textarea {
+    width: 100%;
+    height: 4vw;
+    padding: 0.5vw;
+    border: 0.1vw solid #ddd;
+    border-radius: 0.7vw;
+    font-family: 'omyu-pretty';
+    font-size: 1vw;
+    resize: none;
+    overflow: hidden;
+}
+
+textarea:focus {
+    border-color: #020056;
+    outline: none;
+}
+
+/*select 커스텀*/
+select {
+    outline: none;
+    border: 0.1vw solid #ddd;
+    padding: 0.5vw;
+    border-radius: 1vw;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url(../images/board/down_arrow.png);
+    background-repeat: no-repeat;
+    background-position: calc(100% - 0.5vw) center;
+    background-size: 0.6vw;
+    font-family: 'omyu-pretty';
+    font-size: 1vw;
+}
+select::-ms-expand{ display: none; } /* 익스플로러용 */

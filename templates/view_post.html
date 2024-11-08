@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 보기</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/view_post.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/background.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+
+    <div id="wrap">
+
+        <!--배경 꾸미기 start-->
+        <img id="right_pcline" src="{{ url_for('static', filename='images/board/right_pcline.png') }}" alt="우팝콘 라인" draggable="false">
+        <img id="left_pcline" src="{{ url_for('static', filename='images/board/left_pcline.png') }}" alt="좌팝콘 라인" draggable="false">
+        <img id="down_pcs" src="{{ url_for('static', filename='images/board/popcorns.png') }}" alt="아래팝콘들" draggable="false">
+        <!--배경 꾸미기 end-->
+
+        <div class="post_box">
+            <div class="post-container">
+                <div>
+                    <h1><a href="/posts"><img id="back_btn" src="{{ url_for('static', filename='images/board/back_arrow.png') }}" alt="뒤로가기" draggable="false"></a>{{ post.title }}</h1>
+
+                    <div class="actions" data-authenticated="{{ session.get('authenticated') }}">
+                        <a href="{{ url_for('edit_post', post_id=post._id) }}" class="edit-button">수정</a>
+                        <form action="{{ url_for('delete_post', post_id=post._id) }}" method="POST">
+                            <button type="submit" class="delete-button">삭제</button>
+                        </form>
+                    </div>
+                    <div class="line"></div>
+                </div>
+                
+                <div class="post-details">
+                    <p><strong>서비스:</strong> {{ post.service }}</p>
+                    <pre><strong>필요 사유:</strong> {{ post.reason }}</pre>
+                    <p><strong>사용 기간:</strong> {{ post.date }}</p>
+                    <p><strong>상태:</strong> {{ post.status }}</p>
+                    <p><strong>작성일:</strong> {{ post.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                </div>
+                
+                <h2>댓글</h2>
+
+                <div class="comments_box">
+                    <ul>
+                        {% if comments %}
+                            {% for comment in comments %}
+                                <li>
+                                    <div class="comment">
+                                        <div class="comment_content">
+                                            <h3>{{ comment.author }} <span class="category-{{ comment.category | lower }}">{{ comment.category }}</span> </h3>
+                                            <div class="comment_area">
+                                                <h4>{{ comment.comment }}</h4>
+                                            </div>
+                                            <p>{{ comment.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                                        </div>
+                                        
+                                        
+
+                                        {% if session.get('authenticated') %}
+                                            <div class="delete_btn">
+                                                <!-- 관리자인 경우 추가 옵션(삭제)을 보여줌 -->
+                                                <form action="{{ url_for('delete_comment', post_id=post._id, comment_id=comment._id) }}" method="POST">
+                                                    <button type="submit" id="comment_delete_btn" class="delete-button">삭제</button>
+                                                </form>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li>
+                                <p class="basic_font">댓글이 없습니다.</td>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                
+                <form method="POST" action="{{ url_for('add_comment', post_id=post._id) }}">
+                    <td>
+                        <select class="form-select" id="categoryInput" name="categoryInput" style="width: 13%;" required>
+                            <option value="문의">문의</option>
+                            {% if session.get('authenticated') %}
+                                <!-- 관리자인 경우 추가 옵션을 보여줌 -->
+                                <option value="답변">답변</option>
+                                <option value="활동기록">활동기록</option>
+                                <option value="수정사항">수정사항</option>
+                            {% endif %}
+                        </select>
+                    </td>
+                    
+                    <textarea name="commentInput" cols="20" rows="4" placeholder="댓글을 입력하세요"></textarea>
+                    <button id="write_btn" type="submit" style="width: 15%;">댓글<br>작성</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</body>
+{% endblock %}

@@ -1,0 +1,33 @@
+
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디지털러닝팀 클라우드 요청 게시판</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+
+
+    <div id="wrap">
+        <div class="text_box">
+            <h1>디지털러닝팀 <br> 클라우드 요청 게시판</h1>
+            <a href="/create_post">
+                <h6> AWS 리소스 신청 > </h6>
+            </a>
+        </div>
+
+        <img id="popcorns_line" src="{{ url_for('static', filename='images/main/popcorns_line.png') }}" alt="팝콘 라인" draggable="false">
+        <img id="popcorn1" src="{{ url_for('static', filename='images/main/corn1.png') }}" alt="팝콘1" draggable="false">
+        <img id="popcorn2" src="{{ url_for('static', filename='images/main/corn2.png') }}" alt="팝콘2" draggable="false">
+        <img id="dumi" src="{{ url_for('static', filename='images/main/dumi.png') }}" alt="듬이" draggable="false">
+        <img id="popcorn" src="{{ url_for('static', filename='images/main/popcorn.png') }}" alt="클라우드 팝콘" draggable="false">
+        
+        
+    </div>
+
+</body>
+
+{% endblock %}
+

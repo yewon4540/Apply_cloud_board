@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글 수정</title>
+    <link rel="stylesheet" th:href="@{/css/board/create_post.css}">
+    <link rel="stylesheet" th:href="@{/css/board/edit_post.css}">
+    <link rel="stylesheet" th:href="@{/css/board/background.css}">
+</head>
+<body>
+<div id="wrap">
+
+    <!--배경 꾸미기 start-->
+    <img id="right_pcline" th:src="@{/img/board/right_pcline.png}" alt="우팝콘 라인" draggable="false">
+    <img id="left_pcline" th:src="@{/img/board/left_pcline.png}" alt="좌팝콘 라인" draggable="false">
+    <img id="down_pcs" th:src="@{/img/board/popcorns.png}" alt="아래팝콘들" draggable="false">
+    <!--배경 꾸미기 end-->
+
+    <div class="post_box">
+        <form method="POST" th:action="@{/edit_post/{aid}(aid=${dto.aid})}">
+
+            <h2>글 수정</h2>
+
+            <table>
+                <tr>
+                    <td><label for="title">글 제목 :</label></td>
+                    <td><input type="text" id="title" name="title" th:value="${dto.title}" required></td>
+                </tr>
+                <tr>
+                    <td><label for="service">사용 서비스 :</label></td>
+                    <td>
+                        <select id="service" name="service" required>
+                            <option th:if="${dto.service} eq 'EC2'" value="EC2" selected>EC2</option>
+                            <option th:unless="${dto.service} eq 'EC2'" value="EC2" >EC2</option>
+                            <option th:if="${dto.service} eq 'S3'" value="S3" selected>S3</option>
+                            <option th:unless="${dto.service} eq 'S3'" value="S3" >S3</option>
+                            <option th:if="${dto.service} eq 'RDS'" value="RDS" selected>RDS</option>
+                            <option th:unless="${dto.service} eq 'RDS'" value="RDS" >RDS</option>
+                            <option th:if="${dto.service} eq 'Lambda'" value="Lambda" selected>Lambda</option>
+                            <option th:unless="${dto.service} eq 'Lambda'" value="Lambda" >Lambda</option>
+                            <option th:if="${dto.service} eq '기타'" value="기타" selected>기타</option>
+                            <option th:unless="${dto.service} eq '기타'" value="기타" >기타</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="reason">필요 사유 :</label></td>
+                    <td><textarea id="reason" name="reason" class="maintext" required th:text="${dto.reason}"></textarea></td>
+                </tr>
+                <tr>
+                    <td><label for="start_date">사용 기간 :</label></td>
+                    <td>
+                        <input type="date" name="startDate" id="start_date"
+                               th:value="${#temporals.format(dto.startDate, 'yyyy-MM-dd')}" required>
+                        ~
+                        <input type="date" name="endDate" id="end_date"
+                               th:value="${#temporals.format(dto.endDate, 'yyyy-MM-dd')}" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="status">상태 :</label></td>
+                    <td>
+                        <select id="status" name="status" required>
+                            <option th:if="${dto.status eq '요청'}" value="요청" selected>요청</option>
+                            <option th:unless="${dto.status eq '요청'}" value="요청">요청</option>
+                            <option th:if="${dto.status eq '승인'}" value="승인" selected>승인</option>
+                            <option th:unless="${dto.status eq '승인'}" value="승인">승인</option>
+                            <option th:if="${dto.status eq '반려'}" value="반려" selected>반려</option>
+                            <option th:unless="${dto.status eq '반려'}" value="반려">반려</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">수정 완료</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

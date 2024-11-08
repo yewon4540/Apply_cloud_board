@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_login.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/background.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+
+    <div id="wrap">
+
+        <!--배경 꾸미기 start-->
+        <img id="right_pcline" src="{{ url_for('static', filename='images/board/right_pcline.png') }}" alt="우팝콘 라인" draggable="false">
+        <img id="left_pcline" src="{{ url_for('static', filename='images/board/left_pcline.png') }}" alt="좌팝콘 라인" draggable="false">
+        <img id="down_pcs" src="{{ url_for('static', filename='images/board/popcorns.png') }}" alt="아래팝콘들" draggable="false">
+        <!--배경 꾸미기 end-->
+
+        <h1>관리자 로그인</h1>
+        <div class="post_box">
+            <div class="post_left">
+                <form method="POST">
+                    <div class="login_logo_box">
+                        <img src="{{ url_for('static', filename='images/main/logo.jpg') }}" alt="로고" draggable="false">
+                    </div>
+                    
+                    <label for="username">아이디</label>
+                    <input type="text" id="username" name="username" required><br>
+            
+                    <label for="password">비밀번호</label>
+                    <input type="password" id="password" name="password" required><br>
+            
+                    <button type="submit">로그인</button>
+                </form>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <ul>
+                    {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+            </div>
+
+            <div class="post_right">
+                <div class="photo_box">
+                    <img id="img_ring" src="{{ url_for('static', filename='images/login/ring.png') }}" alt="링" draggable="false">
+                    <img id="img_cloud" src="{{ url_for('static', filename='images/login/cloud3d.png') }}" alt="클라우드" draggable="false">
+                    <img id="img_dumi" src="{{ url_for('static', filename='images/login/dumi2.png') }}" alt="듬이" draggable="false">
+                    <img id="img_light1" src="{{ url_for('static', filename='images/login/light1.png') }}" alt="불빛그룹1" draggable="false">
+                    <img id="img_light2" src="{{ url_for('static', filename='images/login/light2.png') }}" alt="불빛그룹2" draggable="false">
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,27 @@
+services:
+  mariadb:
+    image: ${MARIADB_IMAGE}:${MARIADB_IMAGE_TAG}
+    container_name: aaw-mariadb
+    hostname: aaw-mariadb
+    restart: ${REPOLICY}
+    ports:
+      - ${MARIADB_PORT}:3306
+    environment:
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+    volumes:
+        - ${MARIA_DB_PATH}:/var/lib/mysql
+
+  adminer:
+    image: ${ADMINER_IMAGE}:${ADMINER_IMAGE_TAG}
+    container_name: aaw-adminer
+    hostname: aaw-adminer
+    restart: ${REPOLICY}
+    ports:
+      - ${ADMINER_PORT}:8080
+
+networks:
+  network-aaw:
+    driver: bridge

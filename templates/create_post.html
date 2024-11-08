@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신청 글 작성</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create_post.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/background.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    
+    <script>
+        const postsUrl = "{{ url_for('posts') }}";
+
+        $(document).ready(function() {
+        // 파일 선택 시 파일 이름을 표시
+        $("#attachment").on('change', function() {
+            var fileName = $(this).val().split('\\').pop(); // 파일 경로에서 파일 이름만 추출
+            $(".upload-name").val(fileName);
+        });
+    });
+    </script>
+</head>
+<body>
+
+    <div id="wrap">
+
+        <!--배경 꾸미기 start-->
+        <img id="right_pcline" src="{{ url_for('static', filename='images/board/right_pcline.png') }}" alt="우팝콘 라인" draggable="false">
+        <img id="left_pcline" src="{{ url_for('static', filename='images/board/left_pcline.png') }}" alt="좌팝콘 라인" draggable="false">
+        <img id="down_pcs" src="{{ url_for('static', filename='images/board/popcorns.png') }}" alt="아래팝콘들" draggable="false">
+        <!--배경 꾸미기 end-->
+
+        <div class="post_box">
+            <form method="POST" action="{{ url_for('create_post') }}" enctype="multipart/form-data">
+        
+                <h2>리소스 생성 신청</h2>
+        
+                <table>
+                    <tr>
+                        <td><label for="inputGroupSelect01">사용 서비스 :</label></td>
+                        <td>
+                            <select class="form-select" id="inputGroupSelect01" name="service">
+                                <option value="EC2" selected>EC2</option>
+                                <option value="S3">S3</option>
+                                <option value="RDS">RDS</option>
+                                <option value="Lambda">Lambda</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="start_date">사용 기간 :</label></td>
+                        <td>
+                            <input type="text" name="start_date" id="start_date" readonly>
+                            ~
+                            <input type="text" name="end_date" id="end_date" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="title">글 제목 :</label></td>
+                        <td><input type="text" id="title" name="title" required></td>
+                    </tr>
+                    <tr>
+                        <!-- <td><label for="reason">필요 사유 :</label></td>
+                        <td><input type="text" id="reason" name="reason" class="maintext"></td> -->
+                        <td><label for="reason">필요 사유 :</label></td>
+                        <td><textarea id="reason" name="reason" class="maintext" required></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><label for="reason">첨부 파일 :</label></td>
+                        <td>
+                            <div class="filebox">
+                                <input class="upload-name" value="첨부파일" placeholder="첨부파일" readonly>
+                                <label for="attachment">파일찾기</label> 
+                                <input type="file" name="attachment" id="attachment">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button type="submit">신청</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        
+    </div>
+
+</body>
+{% endblock %}

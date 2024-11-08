@@ -1,0 +1,6 @@
+/*사용 서비스*/
+#service, #status{
+    width: 15%;
+    text-align: center;
+    border-radius: 2vw;
+}

@@ -1,0 +1,304 @@
+/* 전체 감싸는 영역 */
+#wrap {
+    width: 100%;
+    height: 100vh;
+    background: #020056;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+
+/* 게시판 보드 영역 */
+.post_box {
+    height: 37vw;
+    background: white;
+    padding: 1.5vw 3vw;
+    border-radius: 4vw;
+    width: 50%;
+    box-shadow: 0 0.5vw 1vw rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 1vw;
+    animation: slideUp 0.8s ease-out;
+}
+
+/* 인포(공지) 영역  시작*/
+.info_box{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    top: -3.9vw;
+    left: 22vw;
+}
+.info_box .info_dumi{
+    width: 7vw;
+}
+.info_box .bubble_box img, .info_box .bubble_box span{
+    position: absolute;
+    font-family: 'omyu-pretty';
+    font-size: 1vw;
+}
+
+.bubble_box{
+    display: flex;
+    width: 6vw;
+    height: 3vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.bubble_box img{
+    width: 6vw;
+    left: 6.5vw;
+    animation: bubbleScale 1.5s infinite ease-in-out;
+}
+
+.bubble_box span{
+    color: #020056;
+    left: 7.55vw;
+    animation: bubbleScale 1.5s infinite ease-in-out;
+}
+
+/* 말풍선 크기 애니메이션 */
+@keyframes bubbleScale {
+    0%, 100% {
+        transform: scale(1); /* 기본 크기 */
+    }
+    50% {
+        transform: scale(1.05); /* 커진 크기 */
+    }
+}
+
+
+.popup_box{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    align-items: center;
+}
+
+.popup_bg{
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    border-radius: 4vw;
+    display: none;
+}
+
+.popup{
+    background: white;
+    padding: 1vw;
+    border-radius: 1.5vw;
+}
+
+.popup ul{
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    row-gap: 1vw;
+}
+
+.popup h2{
+    font-size: 1.4vw !important;
+}
+
+.popup h6, .popup p{
+    font-size: 1vw;
+    font-family: 'omyu-pretty';
+    line-height: 1.5vw;
+}
+
+.popup h6{
+    color: #4A90E2;
+}
+
+.small_txt{
+    font-size: 0.5vw !important;
+}
+
+
+.popup span{
+    font-size: 1vw;
+    font-family: 'omyu-pretty';
+}
+
+.popup .content_box{
+    border: 0.1vw solid #f2f2f2;
+    padding: 1vw;
+    border-radius: 1vw;
+    text-align: start;
+}
+
+
+/* 인포(공지) 영역  끝*/
+
+/*보드 타이틀*/
+.post_box h2{
+    font-family: 'omyu-pretty';
+    text-align: center;
+    font-size: 1.8vw;
+    margin-bottom: 1vw;
+}
+
+/* 테이블 스타일 */
+.post_box table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'omyu-pretty';
+}
+.post_box table td {
+    padding: 0.8vw 0.5vw;
+    /*padding: 1.15vw 0.5vw;*/
+    /* vertical-align: middle; */
+    font-size: 1.2vw;
+}
+.post_box table td label {
+    font-size: 1.1vw;
+}
+
+/* 입력창 스타일*/
+input, select{
+    font-family: 'omyu-pretty';
+    font-size: 1.1vw;
+}
+.post_box table input[type="text"],
+.post_box table input[type="date"],
+.post_box table select {
+    width: 100%;
+    padding: 0.5vw;
+    border: 0.1vw solid #ddd;
+    border-radius: 0.5vw;
+    font-size: 1vw;
+}
+
+.post_box table input[type="text"]:focus,
+.post_box table input[type="date"]:focus,
+.post_box table select:focus {
+    border-color: #020056;
+    outline: none;
+}
+
+/*select 커스텀*/
+select {
+    -webkit-appearance: none; /* 사파리, 크롬 하위버전용 */
+    -moz-appearance: none; /* 사파리, 크롬 하위버전용 */
+
+    background-image: url("../../img/board/down_arrow.png");
+    background-repeat: no-repeat;
+    background-position: calc(100% - 0.5vw) center;
+    background-size: 0.6vw;
+
+}
+select::-ms-expand{ display: none; } /* 익스플로러용 */
+
+
+/*등록 버튼*/
+.post_box table button {
+    background-color: #020056;
+    color: white;
+    border: none;
+    padding: 0.5vw 1.5vw;
+    font-size: 1vw;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    width: 10vw;
+    border-radius: 1vw;
+    font-family: 'omyu-pretty';
+    font-size: 1.3vw;
+}
+.post_box table button:hover {
+    background-color: #040C80;
+}
+
+/*사용 서비스*/
+#inputGroupSelect01{
+    width: 15%;
+    text-align: center;
+    border-radius: 2vw;
+}
+
+/*사용기간*/
+#start_date, #end_date{
+    width: 24%;
+    text-align: center;
+    border-radius: 2vw;
+}
+
+
+/*필요 사유 */
+textarea.maintext {
+    width: 100%;
+    height: 10vw;
+    padding: 0.5vw;
+    border: 0.1vw solid #ddd;
+    border-radius: 0.7vw;
+    font-family: 'omyu-pretty';
+    font-size: 1vw;
+    resize: none;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+textarea:focus {
+    border-color: #020056;
+    outline: none;
+}
+
+/*필요사유 스크롤바 커스텀*/
+#reason::-webkit-scrollbar{
+    /*스크롤바너비*/
+    width: 0.5vw;
+}
+#reason::-webkit-scrollbar-thumb{
+    /*스크롤바 높이*/
+    height: 30%;
+    /*스크롤바 색상*/
+    background: lightgrey;
+    border-radius: 1vw;
+}
+#reason::-webkit-scrollbar-track{
+    /*스크롤바 뒷 배경 색상*/
+    background: white;
+    border-radius: 0.5vw;
+    margin: 0.5vw;
+}
+
+
+/*파일 선택 커스텀*/
+.post_box table input[type="file"] {
+    font-size: 1vw;
+}
+.filebox .upload-name {
+    padding: 0.5vw;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 78%;
+    color: #999999;
+    border-radius: 0.5vw;
+    outline: none;
+}
+.filebox label {
+    padding: 0.5vw;
+    color: #020056;
+    vertical-align: middle;
+    background-color: white;
+    cursor: pointer;
+    margin-left: 0.5vw;
+    border: 0.1vw solid #020056;
+    border-radius: 0.8vw;
+}
+.filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}

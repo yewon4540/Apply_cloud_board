@@ -1,0 +1,78 @@
+#wrap{
+    width: 100%;
+    height: 100vh;
+    background: #020056;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#wrap h1{ /*페이지 타이틀*/
+    font-family: 'jua';
+    font-size: 2.5vw;
+    color: #F6EEB2;
+    position: relative;
+    top: -2vw;
+}
+
+/* 보드 영역 */
+.post_box {
+    height: 34vw;
+    background: floralwhite;
+    border-radius: 3vw;
+    width: 50%;
+    box-shadow: 0 0.5vw 1vw rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.items_area{
+    display: grid;
+    column-gap: 1vw;
+    align-items: center;
+    grid-template-columns: 7.6vw 7.6vw 7.6vw 7.6vw 7.6vw;
+    grid-template-rows: 10vw 10vw 10vw;
+
+    position: relative;
+    top: 2vw;
+}
+
+.item_box{
+    background: white;
+    /*border: 0.1vw solid #f2f2f2;*/
+    padding: 0.8vw;
+    border-radius: 1.5vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5vw;
+    font-size: 0.8vw;
+    font-family: 'omyu-pretty';
+    box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.item_box:hover{
+
+}
+
+.post_box a{
+    text-decoration: none;
+    color: black;
+}
+
+.img_box{
+    width: 6vw;
+    height: 6vw;
+    background: white;
+    border-radius: 1.5vw;
+    border: 0.1vw solid #f2f2f2;
+}
+
+.img_box img{
+    width: 100%;
+    border-radius: 1.5vw;
+}

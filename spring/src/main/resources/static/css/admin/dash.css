@@ -1,0 +1,64 @@
+#wrap{
+    width: 100%;
+    height: 100vh;
+    background: #020056;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#wrap h1{ /*페이지 타이틀*/
+    font-family: 'jua';
+    font-size: 2.5vw;
+    color: #F6EEB2;
+    position: relative;
+    top: -2.5vw;
+}
+
+/* 보드 영역 */
+.post_box {
+    height: 30vw;
+    background: white;
+    /*border-radius: 3vw;*/
+    width: 60%;
+    box-shadow: 0 0.5vw 1vw rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: hidden;
+}
+
+
+/* 로딩 화면 스타일 */
+#loading {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 888;
+    font-size: 2vw;
+    color: #333;
+    font-family: omyu-pretty;
+}
+
+.loading_box{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 1vw;
+}
+
+#loading_dumi{
+    width: 7vw;
+    margin: 0 auto;
+}
+
+/* 로딩 숨기기 */
+#loading.hidden {
+    display: none;
+}

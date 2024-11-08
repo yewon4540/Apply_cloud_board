@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <header>
+
+        <div class="menu_box">
+            <div class="logo_box">
+                <a href="/">
+                    <img th:src="@{/img/logo.jpg}" th:alt="로고" draggable="false">
+                </a>
+            </div>
+
+            <nav>
+                <ul>
+                    <li>
+                        <a th:if="${existIp}" id="apply_aws" th:href="@{/posts}">
+                            AWS신청
+                        </a>
+                        <a th:unless="${existIp}" class="no_auth" th:href="@{/posts}">
+                            AWS신청
+                        </a>
+                    </li>
+                    <li>
+                        <a id="apply_ncp" href="javascript:alert('준비 중인 기능입니다!');" onfocus="this.blur()">
+                            NCP신청
+                        </a>
+                    </li>
+                    <li th:if="${session.clientRole eq 'admin'}">
+                        <a th:if="${existIp}" id="admin_page" th:href="@{/dashboard}">
+                            관리자페이지
+                        </a>
+                        <a th:unless="${existIp}" class="no_auth" th:href="@{/dashboard}">
+                            관리자페이지
+                        </a>
+
+                        <nav class="sub_menu">
+                            <ul>
+                                <li><a th:href="@{/dash}">Dash</a></li>
+                                <li><a th:href="@{/variable}">Variable</a></li>
+                                <li><a th:href="@{/apply}">Apply</a></li>
+                                <li><a th:href="@{/etc}">ETC</a></li>
+                            </ul>
+                        </nav>
+                    </li>
+                </ul>
+
+            </nav>
+
+        </div>
+    </header>
+
+</body>
+
+
+</html>

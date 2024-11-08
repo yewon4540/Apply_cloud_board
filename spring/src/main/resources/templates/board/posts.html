@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>신청 글 목록</title>
+    <link rel="stylesheet" th:href="@{/css/board/background.css}">
+    <link rel="stylesheet" th:href="@{/css/board/posts.css}">
+</head>
+<body>
+    <div id="wrap">
+        <img id="right_pcline" th:src="@{/img/board/right_pcline.png}" alt="우팝콘 라인" draggable="false">
+        <img id="left_pcline" th:src="@{/img/board/left_pcline.png}" alt="좌팝콘 라인" draggable="false">
+        <img id="down_pcs" th:src="@{/img/board/popcorns.png}" alt="아래팝콘들" draggable="false">
+
+        <div class="post_box">
+            <h2>AWS 신청 목록</h2>
+            <div class="right_btn_box">
+                <a id="apply_btn" th:href="@{/create_post}">
+                    리소스 신청
+                </a>
+            </div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th class="title_border">제목</th>
+                    <th class="author_border">신청자</th>
+                    <th class="status_border status">상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${posts.size()>0}" th:each="post : ${posts}">
+
+                        <td>
+                            <a th:href="@{/posts/detail/{postId}(postId=${post.aid})}">
+                            <div class="title">
+                                <p th:text="${post.title}"></p>
+                            </div>
+                            </a>
+                        </td>
+
+                        <td class="author">
+                            <p th:text="${post.author}"></p>
+                        </td>
+
+                        <td>
+                            <p class="status" th:text="${post.status}"></p>
+                        </td>
+                    </tr>
+                    <tr th:unless="${posts.size()>0}">
+                        <td colspan="2" class="no_content">
+                            <p>게시물이 없습니다.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagination" th:if="${posts.size() > 0}">
+                <ul>
+                    <!-- 이전 버튼 -->
+                    <li th:if="${hasPrevious}">
+                        <a th:href="@{/posts/{page}(page=${currentPage - 1})}">이전</a>
+                    </li>
+
+                    <!-- 페이지 번호 -->
+                    <li th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                        <a th:href="@{/posts/{page}(page=${i})}" th:text="${i}" th:classappend="${currentPage == i} ? 'active'"></a>
+                    </li>
+
+                    <!-- 다음 버튼 -->
+                    <li th:if="${hasNext}">
+                        <a th:href="@{/posts/{page}(page=${currentPage + 1})}">다음</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    document.querySelectorAll('p.status').forEach(function (statusCell) {
+        var statusText = statusCell.innerText.trim();
+
+        if (statusText === '요청') {
+            statusCell.classList.add('status-request');
+        } else if (statusText === '승인') {
+            statusCell.classList.add('status-approve');
+        } else if (statusText === '반려') {
+            statusCell.classList.add('status-reject');
+        }
+    });
+</script>
+</html>

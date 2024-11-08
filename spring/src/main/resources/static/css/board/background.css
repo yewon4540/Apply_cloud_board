@@ -1,0 +1,20 @@
+/*배경 꾸미기*/
+#right_pcline{ /*우 팝콘 라인*/
+    position: absolute;
+    right: 6vw;
+    top: 5vw;
+    width: 13vw;
+}
+
+#left_pcline{ /*좌 팝콘 라인*/
+    position: absolute;
+    left: 5vw;
+    top: 6vw;
+    width: 12vw;
+}
+
+#down_pcs{ /*아래 쌓인 팝콘들*/
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}

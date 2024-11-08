@@ -1,0 +1,76 @@
+/*폰트*/
+@font-face {
+    font-family: 'jua';
+    src: url('../font/BMJUA.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'omyu-pretty';
+    src: url('../font/omyu-pretty.ttf') format('truetype');
+}
+
+/*모든 페이지 기본 설정*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* 상단바 영역 */
+header{
+    position: fixed;
+    height: 50px;
+    width: 100%;
+    background: white;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 99;
+}
+
+
+/*로고 영역*/
+.logo_box{
+    display: flex;
+    align-items: center;
+}
+.logo_box img{
+    width: 100px;
+}
+
+
+
+/*메뉴 영역*/
+.menu_box{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    
+}
+.menu_box ul{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+}
+.menu_box ul a{
+    font-family: 'omyu-pretty';
+    text-decoration: none;
+    margin-right: 30px;
+    color: black;
+    font-size: 22px;
+}
+
+@keyframes slideUp { /*보드가 위로 올라오는 애니메이션*/
+    0% {
+        opacity: 0;
+        transform: translateY(5vw);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
